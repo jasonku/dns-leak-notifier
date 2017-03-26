@@ -15,3 +15,7 @@ San Francisco
 Berkeley
 Oakland
 ```
+
+To have the script run as a service, copy or symlink `dns-leak-notifier.plist` to `~/Library/LaunchAgents` and modify the paths to point to the script and a log destination.
+
+To start the service, use `launchctl load dns-leak-notifier && launchctl start dns-leak-notifier` or just re-login.
