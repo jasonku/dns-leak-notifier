@@ -23,13 +23,13 @@ do
   do
     if [[ $var == *"$LOCATION"* ]]; then
       FOUND=true
-      log "Notifying..."
-      osascript -e "display notification \"Location: $LOCATION\" with title \"DNS Leak Notifier\""
+      log "Recognized location: $LOCATION"
       break
     fi
   done < "$input"
 
   if [ "$FOUND" = false ]; then
-    log "None found"
+    log "Notifying..."
+    osascript -e "display notification \"Unrecognized location: $LOCATION\" with title \"DNS Leak Notifier\""
   fi
 done
