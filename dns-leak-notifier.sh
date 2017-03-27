@@ -1,10 +1,14 @@
 #!/bin/bash
 
+log () {
+  echo "$(date) $1"
+}
+
 while true
 do
-  sleep 2
+  sleep 30
   LOCATION=$(curl -s https://dnsleaktest.com/ | grep flag | cut -d ',' -f 1 | cut -d '>' -f 2 | cut -c 6-)
-  echo "Location: $LOCATION"
+  log "Location: $LOCATION"
 
   if [ -z "$LOCATION" ]; then
     UNABLE_MESSAGE="ERROR: Unable to get location"
@@ -19,13 +23,13 @@ do
   do
     if [[ $var == *"$LOCATION"* ]]; then
       FOUND=true
-      echo "Notifying..."
+      log "Notifying..."
       osascript -e "display notification \"Location: $LOCATION\" with title \"DNS Leak Notifier\""
       break
     fi
   done < "$input"
 
   if [ "$FOUND" = false ]; then
-    echo "None found"
+    log "None found"
   fi
 done
