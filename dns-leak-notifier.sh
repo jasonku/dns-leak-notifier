@@ -7,7 +7,7 @@ log () {
 while true
 do
   sleep 30
-  LOCATION=$(curl -s https://dnsleaktest.com/ | grep flag | cut -d ',' -f 1 | cut -d '>' -f 2 | cut -c 6-)
+  LOCATION=$(curl -s https://dnsleaktest.com/ | grep flag | awk -F '[<>]' '{print $3}' | cut -d ',' -f 1 | awk '{print $NF}')
   log "Location: $LOCATION"
 
   if [ -z "$LOCATION" ]; then
