@@ -7,7 +7,7 @@ log () {
 while true
 do
   sleep 30
-  LOCATION=$(curl -s https://dnsleaktest.com/ | grep flag | awk -F '[<>]' '{print $3}' | cut -d ',' -f 1 | awk '{print $NF}')
+  LOCATION=$(curl -s https://dnsleaktest.com/ | grep flag | awk -F '[<>]' '{print $3}' | cut -d ',' -f 1)
   log "Location: $LOCATION"
 
   if [ -z "$LOCATION" ]; then
@@ -21,9 +21,9 @@ do
   input="$HOME/.dnsleak"
   while IFS= read -r var
   do
-    if [[ $var == *"$LOCATION"* ]]; then
+    if [[ $LOCATION == *"$var"* ]]; then
       FOUND=true
-      log "Recognized location: $LOCATION"
+      log "Recognized location: $var"
       break
     fi
   done < "$input"
